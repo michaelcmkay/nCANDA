@@ -24,5 +24,7 @@ public class WebActivity extends Activity {
         mWebview.setWebViewClient(new WebViewClient());
         mWebview .loadUrl(url);
         setContentView(mWebview );
+
+        Log.d("WEB_ACTIVITY", FirebaseInstanceId.getInstance().getToken());
     }
 }
