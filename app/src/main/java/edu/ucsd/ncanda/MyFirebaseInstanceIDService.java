@@ -1,5 +1,10 @@
 package edu.ucsd.ncanda;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -12,13 +17,18 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
 
 
     public void onTokenRefresh() {
-        // Get updated InstanceID token.
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-        Log.d(TAG, "Refreshed token: " + refreshedToken);
 
-        // If you want to send messages to this application instance or
-        // manage this apps subscriptions on the server side, send the
-        // Instance ID token to your app server.
+        Log.d("FCN TOKEN GET", "Refreshed token: " + refreshedToken);
+
+        final Intent intent = new Intent("tokenReceiver");
+        // You can also include some extra data.
+        final LocalBroadcastManager broadcastManager = LocalBroadcastManager.getInstance(this);
+        intent.putExtra("token",refreshedToken);
+        broadcastManager.sendBroadcast(intent);
+
     }
+
+
 
 }
